@@ -3,15 +3,15 @@ const UserProfile = (props) => {
     <div
     style={{
         border: "1px solid gray",
-        padding: "15px",
-        margin: "15px",
+        padding: "10px",
+        margin: "10px",
         borderRadius: "8px",
         backgroundColor: "#f9f9f9",
       }}
     >
       <p>
         Age:{" "}
-        <span style={{ fontWeight: "bold", color: "darkred" }}>
+        <span style={{ fontWeight: "bold", color: "blue" }}>
           {props.age}
         </span>
       </p>
