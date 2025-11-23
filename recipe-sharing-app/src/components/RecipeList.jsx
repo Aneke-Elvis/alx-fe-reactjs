@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
 
 const RecipeList = () => {
-  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
   const recipes = useRecipeStore((state) => state.recipes);
   const searchTerm = useRecipeStore((state) => state.searchTerm);
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+  const favorites = useRecipeStore((state) => state.favorites);
 
-  // Use filteredRecipes if searchTerm is not empty, else show all
   const listToShow = searchTerm.trim() ? filteredRecipes : recipes;
 
   return (
@@ -15,13 +16,24 @@ const RecipeList = () => {
       {listToShow.length === 0 ? (
         <p>No recipes found.</p>
       ) : (
-        listToShow.map((recipe) => (
-          <div key={recipe.id} style={{ marginBottom: '10px' }}>
-            <h3>
-              <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
-            </h3>
-          </div>
-        ))
+        listToShow.map((recipe) => {
+          const isFav = favorites.includes(recipe.id);
+          return (
+            <div key={recipe.id} style={{ marginBottom: '10px' }}>
+              <h3>
+                <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+              </h3>
+              <button
+                onClick={() =>
+                  isFav ? null : addFavorite(recipe.id)
+                }
+                style={{ padding: '5px 10px', cursor: 'pointer' }}
+              >
+                {isFav ? 'Favorited' : 'Add to Favorites'}
+              </button>
+            </div>
+          );
+        })
       )}
     </div>
   );
